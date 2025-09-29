@@ -182,6 +182,10 @@ jobs:
           curl http://localhost:8080/metrics
           kill %
 
+      - name: Dump kubeflex-controller-manager logs
+        if: always()
+        run: kubectl logs -n kubeflex-system deploy/kubeflex-controller-manager
+
   test-bash:
     name: Test in bash
     runs-on: ubuntu-latest
@@ -316,3 +320,7 @@ jobs:
           sleep 10
           curl http://localhost:8080/metrics
           kill %
+
+      - name: Dump kubeflex-controller-manager logs
+        if: always()
+        run: kubectl logs -n kubeflex-system deploy/kubeflex-controller-manager

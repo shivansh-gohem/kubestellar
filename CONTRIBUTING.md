@@ -1,4 +1,3 @@
-<!-- Canonical GitHub version. Edit contributing-inc.md for website. -->
 # Contributing to KubeStellar
 
 Greetings! We are grateful for your interest in joining the KubeStellar community and making a positive impact. Whether you're raising issues, enhancing documentation, fixing bugs, or developing new features, your contributions are essential to our success.
@@ -45,22 +44,28 @@ To claim an issue that you are interested in, assign it to yourself by leaving a
 
 KubeStellar uses Prow and GitHub bots to help manage issues and pull requests through slash commands. These commands should be written as comments on their own line:
 
-**Issue Management Commands:**  
-- `/assign @username` - Assign an issue to a specific user  
-- `/unassign @username` - Remove assignment from a user  
-- `/assign` - Assign the issue to yourself  
-- `/unassign` - Remove your assignment  
-- `/good-first-issue` - Add the "good first issue" label  
-- `/help-wanted` - Add the "help wanted" label  
+**Issue Management Commands:**  
+- `/assign @username` - Assign an issue to a specific user  
+- `/unassign @username` - Remove assignment from a user  
+- `/assign` - Assign the issue to yourself  
+- `/unassign` - Remove your assignment  
+- `/good-first-issue` - Add the "good first issue" label  
+- `/help-wanted` - Add the "help wanted" label  
 
-**Pull Request Review Commands:**  
-- `/lgtm` - Indicate "looks good to me" (cannot be used on your own PR)  
-- `/approve` - Approve the PR for merging (can be used on your own PR)  
-- `/hold` - Prevent the PR from being merged  
-- `/unhold` - Remove the hold  
-- `/retest` - Re-run failed tests  
+**Pull Request Review Commands:**  
+- `/lgtm` - Indicate "looks good to me" (cannot be used on your own PR)  
+- `/approve` - Approve the PR for merging (can be used on your own PR)  
+- `/hold` - Prevent the PR from being merged  
+- `/unhold` - Remove the hold  
+- `/retest` - Re-run failed tests  
 
 These commands make it easier for contributors and maintainers to manage the workflow without needing special repository permissions.
+
+#### Issue Triage Guidelines
+
+To ensure community proposals are acknowledged in a timely manner, the following guidelines apply to issues labeled `enhancement`.
+
+- **Initial Response:** All enhancement requests should receive an initial response from a maintainer within **14 days** of creation. This can be an acknowledgment, a request for more information, or an update on the proposal's status.
 
 ### Committing
 We encourage all contributors to adopt [best practices in git commit management](https://hackmd.io/q22nrXjERBeIGb-fqwrUSg) to facilitate efficient reviews and retrospective analysis. Note: that document was written for projects where some of the contributors are doing merges into the main branch, but in KubeStellar we have GitHub doing that for us. For the kubestellar repository, this is controlled by [Prow](https://docs.prow.k8s.io/); for the other repositories in the kubestellar organization we use the GitHub mechanisms directly.
@@ -69,9 +74,8 @@ Your git commits should provide ample context for reviewers and future codebase 
 
 A recommended format for final commit messages is as follows:
 
-```
 {Short Title}: {Problem this commit is solving and any important contextual information} {issue number if applicable}
-```
+
 In conformance with CNCF expectations, we will only merge commits that indicate your agreement with the [Developer Certificate of Origin](#certificate-of-origin). The CNCF defines how to do this, and there are two cases: one for developers working for an organization that is a CNCF member, and one for contributors acting as individuals. For the latter, assent is indicated by doing a Git "sign-off" on the commit. 
 
 
@@ -107,7 +111,7 @@ The nickname characters to use for different PRs are as follows
 - ✨ (nickname `:sparkles:`) feature
 - 🐛 (nickname `:bug:`) bug fix
 - 📖 (nickname `:book:`) docs
-- 📝 (nickname `:memo:`)  proposal
+- 📝 (nickname `:memo:`)  proposal
 - ⚠️ (nickname `:warning:`) breaking change
 - 🌱 (nickname `:seedling:`) other/misc
 - ❓ (nickname `:question:`) requires manual review/categorization
@@ -156,60 +160,56 @@ $ hack/gha-reversemap.sh update-action-version actions/checkout
 2025-08-22T02:13:38-04:00;INFO;running update-action-version on actions/checkout
 2025-08-22T02:13:38-04:00;INFO;updating dependency 'actions/checkout' tag to latest version available inside reverse map '.gha-reversemap.yml'
 
-$ hack/gha-reversemap.sh apply-reversemap      
+$ hack/gha-reversemap.sh apply-reversemap      
 2025-08-22T02:13:50-04:00;INFO;running apply-reversemap on ./.github/workflows/*.y*ml
 2025-08-22T02:13:50-04:00;INFO;applying '.gha-reversemap.yml' commit sha to be used in './.github/workflows/add-help-wanted.yml' ...
 2025-08-22T02:13:50-04:00;INFO;found 'actions/github-script' in reversemap with sha=60a0d83039c74a4aee543508d2ffcb1c3799cdea
 2025-08-22T02:13:50-04:00;INFO;applying '.gha-reversemap.yml' commit sha to be used in './.github/workflows/add-to-project.yml' ...
 2025-08-22T02:13:50-04:00;INFO;found 'actions/checkout' in reversemap with sha=08c6903cd8c0fde910a37f88322edcfb5dd907a8
 ...
-```
-
-The `update-action-version` and `update-reversemap` operations in that
-script make calls on the GitHub API --- which are [rate
-limited](https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api). Unauthenticated
+The update-action-version and update-reversemap operations in that
+script make calls on the GitHub API --- which are rate
+limited. Unauthenticated
 calls have a relatively low rate limit. Modest usage of this script is
 unlikely to hit this rate limit. If you run into the rate limit when
 not using authentication then you can add authentication by setting
-the environment variable `GITHUB_TOKEN` to a GitHub Personal Access
+the environment variable GITHUB_TOKEN to a GitHub Personal Access
 Token. All "classic" tokens suffice. For "fine-grained" tokens, the
-only privilege needed is Read access to `metadata`.
+only privilege needed is Read access to metadata.
 
-#### Review and Approval Process
+Review and Approval Process
+Reviewers will review your PR within a business day. A PR requires both an /lgtm and then an /approve in order to get merged. These are commands to Prow, each appearing alone on a line in a comment of the PR. You may /approve your own PR but you may not /lgtm it. Once both forms of assent have been given and the other gating checks have passed, the PR will go into the Prow merge queue and eventually be merged. Once that happens, you will be notified:
 
-Reviewers will review your PR within a business day. A PR requires both an `/lgtm` and then an `/approve` in order to get merged. These are commands to Prow, each appearing alone on a line in a comment of the PR. You may `/approve` your own PR but you may not `/lgtm` it. Once both forms of assent have been given and the other gating checks have passed, the PR will go into the Prow merge queue and eventually be merged. Once that happens, you will be notified:
+Congratulations! Your pull request has been successfully merged! 👏
 
-_Congratulations! Your pull request has been successfully merged!_ 👏
+If you have any questions about contributing, don't hesitate to reach out to us on the KubeStellar-dev Slack channel.
 
-If you have any questions about contributing, don't hesitate to reach out to us on the KubeStellar-dev [Slack channel](https://cloud-native.slack.com/archives/C097094RZ3M/).
+Testing Locally
+Our Getting Started guide shows a user how to install a simple "kick the tires" instance of KubeStellar using a helm chart and kind.
 
-
-
-## Testing Locally
-
-
-Our [Getting Started](docs/content/direct/get-started.md) guide shows a user how to install a simple "kick the tires" instance of KubeStellar using a helm chart and kind.
-
-To set up and test a development system, please refer to the _test/e2e/README.md_ file in the GitHub repository.
+To set up and test a development system, please refer to the test/e2e/README.md file in the GitHub repository.
 After running any of those e2e (end to end) tests you will be left with a running system that can be exercised further.
 
-### Testing changes to the helm chart
+Testing changes to the helm chart
+If you are interested in modifying the Helm chart itself, look at the User Guide page on the Core Helm chart for more information on its many options before you begin, notably on how to specify using a local version of the script.
 
-If you are interested in modifying the Helm chart itself, look at the User Guide page on the [Core Helm chart](docs/content/direct/core-chart.md) for more information on its many options before you begin, notably on how to specify using a local version of the script.
-
-### Testing the script against an upcoming release
-
+Testing the script against an upcoming release
 Prior to making a new release, there needs to be testing that the
 current Helm chart works with the executable behavior that will
-appear in the new release.  
+appear in the new release.  
 
-## Licensing
+Licensing
+KubeStellar is Apache 2.0 licensed and we accept contributions via GitHub pull requests.
 
-KubeStellar is [Apache 2.0 licensed](LICENSE) and we accept contributions via GitHub pull requests.
-
-## Certificate of Origin
-
+Certificate of Origin
 By contributing to this project you agree to the Developer Certificate of
-Origin (DCO). This document was created by the Linux Kernel community and is a
+Origin (https://www.google.com/search?q=DCO). This document was created by the Linux Kernel community and is a
 simple statement that you, as a contributor, have the legal right to make the
-contribution. See the [DCO](DCO) file for details.
+contribution. See the DCO file for details.
+
+
+
+
+
+
+
